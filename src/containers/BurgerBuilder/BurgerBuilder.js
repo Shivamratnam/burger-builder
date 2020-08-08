@@ -4,7 +4,6 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Model from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import AxiosInstance from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICE = {
@@ -27,6 +26,10 @@ class BurgerBuilder extends Component {
         purchasable: false,
         purchasing: false,
         loading: false
+    }
+
+    componentDidMount() {
+        console.log(this.props);
     }
 
     updatePurchaseStateHandler(ingredients) {
@@ -68,26 +71,17 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: "Roofer Max",
-                address: {
-                    street: "testStreet1",
-                    zipCode: "123456",
-                    state: "Mumbai",
-                    country: "India"
-                },
-                email: "roofer.max@gmail.com"
-            },
-            deliveryMethod: "Fastest"
+        const queryParams = [];
+        for (let ingredient in this.state.ingredients) {
+            let paramValue = encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.state.ingredients[ingredient]);
+            queryParams.push(paramValue);
         }
-        AxiosInstance.post('/orders.json', order).then(response => {
-            this.setState({loading: false, purchasing: false});
-        }).catch(error => {
-            this.setState({loading: false, purchasing: false});
+        queryParams.push('price=' + this.state.totalPrice);
+        const queryString = '?' + queryParams.join('&');
+        console.log(queryString);
+        this.props.history.push({
+            pathname: '/checkout',
+            search: queryString
         });
     }
     // loadingStateHandler = () => {
