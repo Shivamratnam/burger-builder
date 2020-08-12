@@ -3,9 +3,12 @@ import Aux from '../../../hoc/Auxiliary';
 import Button from '../../UI/Button/Button';
 
 const orderSummary = (props) => {
-    const ingredients = Object.keys(props.ingredients).map(key => {
-    return <li key={key}><span style={{textTransform: "capitalize"}}>{key}</span>: {props.ingredients[key]}</li>
-    });
+    let ingredients = null;
+    if (props.ingredients) {
+        ingredients = Object.keys(props.ingredients).map(key => {
+        return <li key={key}><span style={{textTransform: "capitalize"}}>{key}</span>: {props.ingredients[key]}</li>
+        });
+    }
     return(
         <Aux>
             <h3>Your Orders</h3>
