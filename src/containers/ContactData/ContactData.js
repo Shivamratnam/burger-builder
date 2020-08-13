@@ -6,7 +6,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/lnput/Input';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 class ContactData extends Component {
     state = {
         orderForm: {

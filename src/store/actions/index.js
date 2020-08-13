@@ -8,3 +8,7 @@ export {
     submitOrder,
     resetPurchased
 } from './order';
+export {
+    auth,
+    authLogout
+} from './auth';

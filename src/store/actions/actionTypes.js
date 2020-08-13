@@ -8,3 +8,10 @@ export const ORDER_PURCHASED = 'ORDER_PURCHASED';
 export const RESET_PURCHASED = 'RESET_PURCHASED';
 export const FETCH_ORDER_FAILED = 'FETCH_ORDER_FAILED';
 export const FETCH_ORDER_SUCCESS = 'FETCH_ORDER_SUCCESS';
+
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const AUTH_LOGIN = 'AUTH_LOGIN';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const AUTH_SIGNUP = 'AUTH_SIGNUP';
