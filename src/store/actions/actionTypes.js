@@ -15,3 +15,4 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGIN = 'AUTH_LOGIN';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_SIGNUP = 'AUTH_SIGNUP';
+export const SET_AUTH_REDIRECT_URL = 'AUTH_REDIRECT_URL';

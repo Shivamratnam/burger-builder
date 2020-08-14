@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Button from '../../components/UI/Button/Button';
-import AxiosInstance from '../../axios-orders'
 import './ContactData.css'
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/lnput/Input';
@@ -104,7 +103,8 @@ class ContactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            orderData: formData
+            orderData: formData,
+            uid: this.props.userId
         }
         this.props.onOrderSubmit(order);
     }
@@ -186,7 +186,8 @@ const mapStateToProps = state => {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
-        purchased: state.order.purchased
+        purchased: state.order.purchased,
+        userId: state.auth.uid
     }
 }
 const mapDispatchToProps = dispatch => {

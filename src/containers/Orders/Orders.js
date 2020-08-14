@@ -11,15 +11,21 @@ class Orders extends Component {
     render() {
         let orders = null;
         if (this.props.orders) {
-            orders = this.props.orders.map(order => (
-                <Order key={order.id} ingredients={order.ingredients} price={order.price}/>
-            ));
+            // It's not a good practice (a security issue)
+            orders = this.props.orders.filter(order => this.props.userId === order.uid);
+            if (orders.length === 0) {
+                orders = <strong>You do not have any order history.</strong>;
+            } else {
+                orders = orders.map(order => (
+                    <Order key={order.id} ingredients={order.ingredients} price={order.price}/>
+                ));
+            }
         }
         if (this.props.loading) {
             orders = <Spinner />
         }
         return (
-            <div>
+            <div style={{textAlign: 'center'}}>
                 {orders}
             </div>
         );
@@ -29,7 +35,8 @@ class Orders extends Component {
 const mapStateToProps = state => {
     return {
         orders: state.order.orders,
-        loading: state.order.loading
+        loading: state.order.loading,
+        userId: state.auth.uid
     };
 };
 const mapDispatchToProps = dispatch => {

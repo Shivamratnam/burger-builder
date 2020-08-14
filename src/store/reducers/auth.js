@@ -1,10 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    uid: null,
     isAuthenticated: false,
     authErrorMsg: null,
     loading: false,
-    token: null
+    token: null,
+    loginRedirectUrl: "/"
 }
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +20,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
+                uid: action.uid,
                 token: action.token,
                 authErrorMsg: null,
                 isAuthenticated: true,
@@ -36,6 +39,11 @@ const reducer = (state = initialState, action) => {
                 token: null,
                 authErrorMsg: null,
                 isAuthenticated: false,
+            }
+        case actionTypes.SET_AUTH_REDIRECT_URL:
+            return {
+                ...state,
+                loginRedirectUrl: action.authRedirectUrl
             }
         default: return state
     }

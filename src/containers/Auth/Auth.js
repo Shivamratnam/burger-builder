@@ -7,6 +7,7 @@ import './Auth.css';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { Redirect } from 'react-router';
 
 class Auth extends Component {
     state = {
@@ -140,6 +141,9 @@ class Auth extends Component {
         if (this.props.loading) {
             UI = <Spinner />
         }
+        if (this.props.isAuthenticated) {
+            UI = <Redirect to={this.props.loginRedirectUrl} />
+        }
         return UI
     }
 }
@@ -147,7 +151,9 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         errorMsg: state.auth.authErrorMsg,
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        isAuthenticated: state.auth.isAuthenticated,
+        loginRedirectUrl: state.auth.loginRedirectUrl
     }
 }
 const mapDispatchToProps = dispatch => {

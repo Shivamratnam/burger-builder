@@ -6,10 +6,11 @@ const authStart= () => {
         type: actionTypes.AUTH_START
     }
 }
-const authSuccess = (token) => {
+const authSuccess = (token, uid) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        token: token
+        token: token,
+        uid: uid
     }
 }
 const authFail = (error) => {
@@ -23,6 +24,12 @@ export const authLogout = () => {
         type: actionTypes.AUTH_LOGOUT
     }
 }
+export const setAuthRedirectUrl = (url) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_URL,
+        authRedirectUrl: url
+    }
+}
 
 
 export const auth = (email, password, authType) => {
@@ -30,30 +37,24 @@ export const auth = (email, password, authType) => {
         dispatch(authStart());
         if (authType === actionTypes.AUTH_LOGIN) {
             firebase.auth.signInWithEmailAndPassword(email, password).then(res => {
-                console.log("LOGIN: ", res);
                 res.user.getIdToken().then(token => {
-                    console.log(token);
                     sessionStorage.setItem('token', token);
                     sessionStorage.setItem('userid', res.user.uid);
                     sessionStorage.setItem('displayName', res.user.displayName);
-                    dispatch(authSuccess(token));
+                    dispatch(authSuccess(token, res.user.uid));
                 });
             }).catch(error => {
-                console.log(error);
                 dispatch(authFail(error.message));
             });
         } else { // for signup
             firebase.auth.createUserWithEmailAndPassword(email, password).then(res => {
-                console.log("SIGNUP: ", res);
                 res.user.getIdToken().then(token => {
-                    console.log(token);
                     sessionStorage.setItem('token', token);
                     sessionStorage.setItem('userid', res.user.uid);
                     sessionStorage.setItem('displayName', res.user.displayName);
-                    dispatch(authSuccess(token));
+                    dispatch(authSuccess(token, res.user.uid));
                 });
             }).catch(error => {
-                console.log(error);
                 dispatch(authFail(error.message));
             });
         }
